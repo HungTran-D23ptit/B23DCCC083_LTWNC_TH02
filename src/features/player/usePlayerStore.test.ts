@@ -10,7 +10,6 @@ const mockSongs: Song[] = [
 
 describe('usePlayerStore', () => {
   beforeEach(() => {
-    // Đặt lại store trước mỗi test bằng usePlayerStore.setState(...)
     usePlayerStore.setState({ ...initialPlayerState });
   });
 
@@ -49,18 +48,14 @@ describe('usePlayerStore', () => {
 
   it('tick ở giây cuối tự sang bài sau', () => {
     const { playQueue, tick } = usePlayerStore.getState();
-    // Song 3 duration is 10s
     playQueue(mockSongs, 2);
 
-    // Set position to 9s (giây cuối)
     usePlayerStore.setState({ position: 9 });
     tick();
 
-    // Bài 3 là bài cuối nên tick gọi next() -> dừng phát
     const state = usePlayerStore.getState();
     expect(state.isPlaying).toBe(false);
 
-    // Test với bài 1 (180s) sang bài 2
     playQueue(mockSongs, 0);
     usePlayerStore.setState({ position: 179 });
     tick();
@@ -73,7 +68,7 @@ describe('usePlayerStore', () => {
 
   it('next ở bài cuối thì isPlaying là false', () => {
     const { playQueue, next } = usePlayerStore.getState();
-    playQueue(mockSongs, 2); // Bài cuối index = 2
+    playQueue(mockSongs, 2);
 
     expect(usePlayerStore.getState().isPlaying).toBe(true);
     next();
@@ -124,12 +119,10 @@ describe('usePlayerStore', () => {
 
     expect(usePlayerStore.getState().queue).toHaveLength(1);
 
-    // Thêm bài 2
     addToQueue(mockSongs[1]);
     expect(usePlayerStore.getState().queue).toHaveLength(2);
     expect(usePlayerStore.getState().queue[1].id).toBe('s2');
 
-    // Thêm lại bài 1 (đã có) -> không thêm
     addToQueue(mockSongs[0]);
     expect(usePlayerStore.getState().queue).toHaveLength(2);
   });

@@ -37,7 +37,6 @@ describe('playlistReducer', () => {
     });
 
     expect(newState.find((p) => p.id === 'pl-1')?.name).toBe('Nhạc Pop thịnh hành');
-    // Các playlist khác giữ nguyên
     expect(newState.find((p) => p.id === 'pl-2')?.name).toBe('Acoustic');
   });
 
@@ -56,7 +55,7 @@ describe('playlistReducer', () => {
     const newState = playlistReducer(initialPlaylists, {
       type: 'addSong',
       playlistId: 'pl-1',
-      songId: 's1', // s1 đã tồn tại
+      songId: 's1',
     });
 
     const target = newState.find((p) => p.id === 'pl-1');

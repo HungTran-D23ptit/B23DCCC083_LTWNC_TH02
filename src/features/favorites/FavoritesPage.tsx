@@ -70,10 +70,15 @@ export const FavoritesPage: React.FC = () => {
               <div key={song.id} className="song-row" data-testid={`favorite-row-${song.id}`}>
                 <span className="col-index">{index + 1}</span>
                 <div className="col-info">
-                  <span className="song-title">{song.title}</span>
-                  <span className="song-artist">{song.artist}</span>
+                  <div className={`song-thumb genre-thumb-${song.genre.toLowerCase()}`} aria-hidden="true">
+                    <span>{song.title.charAt(0)}</span>
+                  </div>
+                  <div className="song-text-meta">
+                    <span className="song-title">{song.title}</span>
+                    <span className="song-artist">{song.artist}</span>
+                  </div>
                 </div>
-                <span className="col-genre badge-genre">{song.genre}</span>
+                <span className={`col-genre badge-genre badge-${song.genre.toLowerCase()}`}>{song.genre}</span>
                 <span className="col-duration">{formatDuration(song.duration)}</span>
                 <div className="col-actions">
                   <button

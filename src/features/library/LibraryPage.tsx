@@ -25,7 +25,6 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({
   const [selectedGenre, setSelectedGenre] = useState<string>('Tất cả');
   const [sortBy, setSortBy] = useState<string>('default');
 
-  // Playlist context fallback
   const contextPlaylists = useContext(PlaylistStateContext) || [];
   const contextDispatch = useContext(PlaylistDispatchContext);
 
@@ -47,15 +46,12 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({
     }
   };
 
-  // Debounced search query
   const debouncedQuery = useDebounce(searchQuery, 300);
 
-  // Mandatory handler name: handleQueryShift
   const handleQueryShift = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
-  // Filter and sort songs using useMemo
   const filteredSongs = useMemo(() => {
     let result = SONGS;
 
@@ -83,15 +79,12 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({
     return result;
   }, [debouncedQuery, selectedGenre, sortBy]);
 
-  // Player actions
   const playQueue = usePlayerStore((s) => s.playQueue);
   const addToQueue = usePlayerStore((s) => s.addToQueue);
 
-  // Favorites state
   const favoriteIds = useFavoritesStore((s) => s.ids);
   const toggleFavorite = useFavoritesStore((s) => s.toggle);
 
-  // Callbacks with useCallback
   const handlePlay = useCallback(
     (_song: Song, index: number) => {
       playQueue(filteredSongs, index);
@@ -133,7 +126,6 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({
     [propOnAddSongToPlaylist, contextDispatch, selectedPlaylistId]
   );
 
-  // Stable itemData for react-window
   const hasValidPlaylist = Boolean(
     selectedPlaylistId && playlists.some((p) => p.id === selectedPlaylistId)
   );

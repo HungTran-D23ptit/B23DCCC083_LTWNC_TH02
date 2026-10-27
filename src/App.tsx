@@ -6,16 +6,33 @@ import { useTheme } from './contexts/ThemeContext';
 import { LibraryPage } from './features/library/LibraryPage';
 import { PlayerBar } from './features/player/PlayerBar';
 
-// Lazy load route pages
 const FavoritesPage = lazy(() => import('./features/favorites/FavoritesPage'));
 const PlaylistsPage = lazy(() => import('./features/playlists/PlaylistsPage'));
 const PlaylistDetailPage = lazy(() => import('./features/playlists/PlaylistDetailPage'));
 
-// Mandatory handler function
+import { usePlayerStore } from './features/player/usePlayerStore';
+
 export const handleQueryShift = (query: string) => query;
 
 export const App: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === 'Space') {
+        const activeTag = document.activeElement?.tagName.toLowerCase();
+        if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') {
+          return;
+        }
+        e.preventDefault();
+        usePlayerStore.getState().togglePlay();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   return (
     <div className={`app-root ${theme}`}>

@@ -19,7 +19,7 @@ export const generateSongs = (count: number): Song[] =>
       title: `${name} ${Math.floor(i / 80) + 1}`,
       artist: ARTISTS[(i * 7) % 10],
       genre: GENRES[(i * 3) % 5],
-      duration: 150 + ((i * 37) % 151), // từ 150 đến 300 giây
+      duration: 150 + ((i * 37) % 151),
     };
   });
 

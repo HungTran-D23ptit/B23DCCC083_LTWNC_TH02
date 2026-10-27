@@ -28,14 +28,30 @@ export const PlayerBar: React.FC = () => {
       <div className="player-bar-inner">
         <div className="player-info">
           {currentSong ? (
-            <>
-              <span className="now-playing-label">Đang phát:</span>
-              <strong className="song-title">{currentSong.title}</strong>
-              <span className="separator">–</span>
-              <span className="song-artist">{currentSong.artist}</span>
-            </>
+            <div className="player-song-card">
+              <div className="player-thumb-artwork" aria-hidden="true">
+                <span>🎵</span>
+              </div>
+              <div className="player-text-block">
+                <div className="player-top-row">
+                  <span className="now-playing-label">Đang phát:</span>
+                  <strong className="song-title">{currentSong.title}</strong>
+                </div>
+                <div className="player-bottom-row">
+                  <span className="separator">–</span>
+                  <span className="song-artist">{currentSong.artist}</span>
+                </div>
+              </div>
+            </div>
           ) : (
-            <span className="not-playing">Chưa phát bài nào</span>
+            <div className="player-song-card not-playing-card">
+              <div className="player-thumb-artwork empty" aria-hidden="true">
+                <span>🎧</span>
+              </div>
+              <div className="player-text-block">
+                <span className="not-playing">Chưa phát bài nào</span>
+              </div>
+            </div>
           )}
         </div>
 

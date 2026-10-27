@@ -5,7 +5,7 @@ export interface Song {
   title: string;
   artist: string;
   genre: Genre;
-  duration: number; // đơn vị: giây
+  duration: number;
 }
 
 export interface Playlist {
